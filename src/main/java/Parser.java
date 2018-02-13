@@ -26,7 +26,7 @@ public class Parser {
             HTMLString = HTMLString.substring(HTMLString.indexOf(' ')+1);
             // Grab just the price
             String price = HTMLString.substring(0, HTMLString.indexOf(','));
-            itemList.add(itemName + " | Price: $" +  price);
+            itemList.add(itemName + " | Price: $" +  price + " / " + document);
             return true;
         }
         catch (IOException e) {
@@ -37,6 +37,7 @@ public class Parser {
 
     public boolean insertItemBananaGAP(String itemName, String document){
         try{
+            System.out.print(document);
             Document parse = Jsoup.connect(document).get();
             Elements elements = parse.getElementsByTag("h5");
             String HTMLString = elements.toString();
@@ -49,12 +50,13 @@ public class Parser {
                 HTMLString = HTMLString.substring(HTMLString.indexOf("$")+1);
             }
             String price = HTMLString.substring(0, HTMLString.indexOf(' '));
-            itemList.add(itemName + " | Price: $" +  price);
+            itemList.add(itemName + " | Price: $" +  price + " / " + document);
             return true;
         }
         catch (IOException e){
             e.getStackTrace();
         }
+        System.out.print(document);
         return false;
     }
 
@@ -65,13 +67,17 @@ public class Parser {
 
     public String getPrice(){
         String price = itemList.get(itemList.size()-1);
-        return price.substring(price.indexOf('$')+1);
+        return price.substring(price.indexOf('$')+1, price.indexOf('/')-1);
     }
 
-    public void printMap(){
-        System.out.print(itemList);
+    List<String> getURLList(){
+        List<String> temp = new ArrayList<String>();
+        for(String s : itemList){
+            String url = s.substring(getPrice().indexOf('/')+1);
+            temp.add(url);
+        }
+        return temp;
     }
-
     List<String> getArrayList(){
         return itemList;
     }
