@@ -4,7 +4,7 @@ Uses the Jsoup library to extract the prices of items from clothing stores. Uses
 
 # LIST OF STORES
 
-1) UNIQLO
-2) BANANA REPUBLIC
+1) Uniqlo
+2) Banana Republic
 3) GAP
-4) ADIDAS
+4) Adidas
