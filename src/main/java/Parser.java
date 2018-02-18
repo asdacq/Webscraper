@@ -37,7 +37,6 @@ public class Parser {
 
     public boolean insertItemBananaGAP(String itemName, String document){
         try{
-            System.out.print(document);
             Document parse = Jsoup.connect(document).get();
             Elements elements = parse.getElementsByTag("h5");
             String HTMLString = elements.toString();
@@ -56,7 +55,27 @@ public class Parser {
         catch (IOException e){
             e.getStackTrace();
         }
-        System.out.print(document);
+        return false;
+    }
+
+    public boolean insertItemAdidas(String itemName, String document){
+        try{
+            Document parse = Jsoup.connect(document).get();
+            Elements elements = parse.getElementsByTag("span");
+            String HTMLString = elements.toString();
+            if(HTMLString.contains("price-sale-big")){
+                HTMLString = HTMLString.substring(HTMLString.indexOf("price-sale-big"));
+            }
+            else{
+                HTMLString = HTMLString.substring(HTMLString.indexOf("price-big"));
+            }
+            String price = HTMLString.substring(HTMLString.indexOf("$")+1, HTMLString.indexOf("<"));
+            itemList.add(itemName + " | Price: $" +  price + " / " + document);
+            return true;
+        }
+        catch (IOException e){
+            e.getStackTrace();
+        }
         return false;
     }
 
@@ -69,6 +88,7 @@ public class Parser {
         String price = itemList.get(itemList.size()-1);
         return price.substring(price.indexOf('$')+1, price.indexOf('/')-1);
     }
+
 
     List<String> getURLList(){
         List<String> temp = new ArrayList<String>();

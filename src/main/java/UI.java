@@ -68,6 +68,9 @@ public class UI{
                     else if(urlInput.getText().contains("gap.com") && p.insertItemBananaGAP(itemNameInput.getText(), urlInput.getText())){
                         insertItem();
                     }
+                    else if(urlInput.getText().contains("adidas.com") && p.insertItemAdidas(itemNameInput.getText(), urlInput.getText())){
+                        insertItem();
+                    }
                     else{
                         JOptionPane.showMessageDialog(frame,
                                 "URL Error",
