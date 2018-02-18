@@ -18,6 +18,7 @@ public class UI{
     private JPanel textPanel = new JPanel();
     private JFrame frame = new JFrame("Scraper");
     private JButton add = new JButton("Add");
+    private JButton remove = new JButton("Remove");
     private JLabel urlText = new JLabel("Item URL: ");
     private JLabel itemText = new JLabel("Item Name: ");
     private JTextField urlInput = new JTextField( 10);
@@ -41,6 +42,7 @@ public class UI{
         textPanel.add(itemText);
         textPanel.add(itemNameInput);
         textPanel.add(add);
+        textPanel.add(remove);
         container.add(textPanel);
 
         JScrollPane scrollPane = new JScrollPane(list);
@@ -81,6 +83,12 @@ public class UI{
                 }
             }
         });
+
+        remove.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                deleteFromList();
+            }
+        });
     }
 
     private void writeFile(){
@@ -100,7 +108,7 @@ public class UI{
 
     private void readFile(){
         try {
-            String line = null;
+            String line;
             FileReader fileReader = new FileReader("items.txt");
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             while((line = bufferedReader.readLine()) != null) {
@@ -132,7 +140,7 @@ public class UI{
                 updateListUI();
             }
         };
-        final ScheduledFuture<?> future = scheduler.scheduleAtFixedRate(runner, 30, 30, MINUTES);
+        final ScheduledFuture<?> future = scheduler.scheduleAtFixedRate(runner, 1, 10, SECONDS);
         scheduler.schedule(new Runnable() {
             public void run() {
                 future.cancel(true);
@@ -168,6 +176,19 @@ public class UI{
                 addItems();
             }
         });
+    }
+
+    private boolean deleteFromList() {
+        list.getSelectedIndex();
+        model.size();
+        int index = list.getSelectedIndex();
+        if(index != -1){
+            savedList.remove(index);
+            eraseAll();
+            addItems();
+            return true;
+        }
+        return false;
     }
 }
 
